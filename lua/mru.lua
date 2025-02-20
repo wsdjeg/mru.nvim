@@ -1,5 +1,5 @@
 local M = {}
-local mru_cache_file = vim.fn.sdtpath('data') .. '/nvim-mru.json'
+local mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
 local files = {}
 local function read_cache()
   local file = io.open(mru_cache_file, 'r')
