@@ -6,7 +6,7 @@ local function read_cache()
   if file then
     local context = file:read('*a')
     io.close(file)
-    files = vim.json.decode(table.concat(context, '\n'))
+    files = vim.json.decode(context)
   end
 end
 
