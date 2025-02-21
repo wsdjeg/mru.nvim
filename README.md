@@ -30,3 +30,11 @@ clear mru:
 ```
 require('mru').clear()
 ```
+
+## Telescope source
+
+after loading telescope.nvim, you need to load this extension:
+
+```lua
+require('telescope').load_extension('mru')
+```
