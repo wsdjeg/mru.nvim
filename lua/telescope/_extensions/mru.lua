@@ -14,7 +14,7 @@ local pickers = require("telescope.pickers")
 local mru = require('mru')
 
 local function prepare_output_table()
-    local lines = vim.deep_copy(mru.get())
+    local lines = vim.deepcopy(mru.get())
 
     return lines
 end
