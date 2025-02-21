@@ -43,9 +43,7 @@ function M.setup(opt)
     group = augroup,
     callback = function(e)
       local f = unify_path(e.file)
-      if not files[f] then
-        files[f] = vim.uv.gettimeofday()
-      end
+      files[f] = vim.uv.gettimeofday()
       write_cache()
     end,
   })
