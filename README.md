@@ -33,8 +33,4 @@ require('mru').clear()
 
 ## Telescope source
 
-after loading telescope.nvim, you need to load this extension:
-
-```lua
-require('telescope').load_extension('mru')
-```
+This plugin also provide a telescope source: `:Telescope mru`
