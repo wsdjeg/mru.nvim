@@ -43,8 +43,8 @@ function M.setup(opt)
     group = augroup,
     callback = function(e)
       local f = unify_path(e.file)
-      if not vim.tbl_contains(files, f) then
-        table.insert(files, f)
+      if not files[f] then
+        files[f] = vim.uv.gettimeofday()
       end
       write_cache()
     end,
@@ -52,7 +52,11 @@ function M.setup(opt)
 end
 
 function M.get()
-  return files
+  local fs = vim.tbl_keys(files)
+  table.sort(fs, function(a, b)
+    return files[a] > files[b]
+  end)
+  return fs
 end
 
 function M.clear()
