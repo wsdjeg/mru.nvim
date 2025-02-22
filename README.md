@@ -46,6 +46,7 @@ Customize mru.nvim by adding the following to your Neovim config (e.g., init.lua
 require('mru').setup({
     enable_cache = true,
     mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
+    events = {'BufEnter', 'BufWritePost'},        -- events to update mru file list
 })
 ```
 

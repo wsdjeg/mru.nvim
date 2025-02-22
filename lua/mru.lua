@@ -38,13 +38,15 @@ function M.setup(opt)
   end
 
   local create_autocmd = vim.api.nvim_create_autocmd
-  create_autocmd({ 'BufRead' }, {
+  create_autocmd(opt.events or { 'BufEnter', 'BufWritePost' }, {
     pattern = { '*' },
     group = augroup,
     callback = function(e)
       local f = unify_path(e.file)
-      files[f] = vim.uv.gettimeofday()
-      write_cache()
+      if vim.fn.filereadable(f) == 1 then
+        files[f] = vim.uv.gettimeofday()
+        write_cache()
+      end
     end,
   })
 end
