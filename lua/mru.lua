@@ -4,14 +4,6 @@ local enable_cache = true
 local ignore_path_regexs = {}
 local mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
 local files = {}
-local function read_cache()
-  local file = io.open(mru_cache_file, 'r')
-  if file then
-    local context = file:read('*a')
-    io.close(file)
-    files = vim.json.decode(context)
-  end
-end
 
 local unify_path = require('mru.utils').unify_path
 
@@ -22,6 +14,16 @@ local function is_ignore_path(p)
     end
   end
   return false
+end
+local function read_cache()
+  local file = io.open(mru_cache_file, 'r')
+  if file then
+    local context = file:read('*a')
+    io.close(file)
+    files = vim.tbl_filter(function(t)
+      return vim.fn.filereadable(t) == 1 and not is_ignore_path(t)
+    end, vim.json.decode(context))
+  end
 end
 
 local function write_cache()
@@ -44,8 +46,8 @@ function M.setup(opt)
   if opt.mru_cache_file then
     mru_cache_file = opt.mru_cache_file
   end
-  if opt.ignore_path_regex then
-    ignore_path_regexs = opt.ignore_path_regex
+  if opt.ignore_path_regexs then
+    ignore_path_regexs = opt.ignore_path_regexs
   end
 
   read_cache()
