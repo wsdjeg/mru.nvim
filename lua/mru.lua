@@ -20,9 +20,14 @@ local function read_cache()
   if file then
     local context = file:read('*a')
     io.close(file)
-    files = vim.tbl_filter(function(t)
+    local obj = vim.json.decode(context)
+    local keys = vim.tbl_filter(function(t)
       return vim.fn.filereadable(t) == 1 and not is_ignore_path(t)
-    end, vim.json.decode(context))
+    end, vim.tbl_keys(obj))
+    files = {}
+    for _, k in ipairs(keys) do
+        files[k] = obj[k]
+    end
   end
 end
 
