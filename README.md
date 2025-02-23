@@ -9,10 +9,9 @@ Perfect for developers, writers, or anyone who wants to streamline their workflo
 
 ## Features
 
-- Unify file path.
-- Easy navigation and file selection.
-- Lightweight and minimal dependencies.
-- Configurable options to suit your needs.
+- Unified file path format.
+- Ignore path via regex.
+- Lightweight and none dependencies.
 
 ## Installation
 
