@@ -1,6 +1,7 @@
 local M = {}
 
 local enable_cache = true
+local ignore_path_regexs = {}
 local mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
 local files = {}
 local function read_cache()
@@ -14,7 +15,14 @@ end
 
 local unify_path = require('mru.utils').unify_path
 
-read_cache()
+local function is_ignore_path(p)
+  for _, regex in ipairs(ignore_path_regexs) do
+    if vim.regex(regex):match_str(p) then
+      return true
+    end
+  end
+  return false
+end
 
 local function write_cache()
   if not enable_cache then
@@ -36,6 +44,11 @@ function M.setup(opt)
   if opt.mru_cache_file then
     mru_cache_file = opt.mru_cache_file
   end
+  if opt.ignore_path_regex then
+    ignore_path_regexs = opt.ignore_path_regex
+  end
+
+  read_cache()
 
   local create_autocmd = vim.api.nvim_create_autocmd
   create_autocmd(opt.events or { 'BufEnter', 'BufWritePost' }, {
@@ -43,7 +56,7 @@ function M.setup(opt)
     group = augroup,
     callback = function(e)
       local f = unify_path(e.file)
-      if vim.fn.filereadable(f) == 1 then
+      if vim.fn.filereadable(f) == 1 and not is_ignore_path(f) then
         files[f] = vim.uv.gettimeofday()
         write_cache()
       end
