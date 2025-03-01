@@ -4,20 +4,20 @@ A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) 
 
 ## Overview
 
-`mru.nvim` keeps track of the files you’ve recently opened in Neovim and provides quick access to them via telescope exten.
-Perfect for developers, writers, or anyone who wants to streamline their workflow in Neovim.
+`mru.nvim` keeps track of the files you’ve recently opened in Neovim and
+provides quick access to them via telescope extension.
 
 ## Features
 
 - Unified file path format.
 - Ignore path via regex.
-- Lightweight and none dependencies.
+- Lightweight and no dependencies.
 
 ## Installation
 
 Use your preferred Neovim plugin manager to install mru.nvim.
 
-with nvim-plug
+with [nvim-plug](https://github.com/wsdjeg/nvim-plug)
 
 ```lua
 require('plug').add({
@@ -25,11 +25,11 @@ require('plug').add({
 })
 ```
 
-After installation, run `:PlugInstall` (depending on your plugin manager) to fetch the plugin.
+Then use `:PlugInstall mru.nvim` to install this plugin.
 
 ## Usage
 
-Add custom keybindings to your init.lua or init.vim for faster access. Example:
+Add custom keybindings to your init.lua for faster access. Example:
 
 ```lua
 vim.api.nvim_set_keymap('n', '<leader>m', ':Telesscope mru<CR>', { noremap = true, silent = true })
@@ -39,7 +39,7 @@ Now, pressing `<leader>m` (e.g., `\m` by default) will open the MRU list.
 
 ## Configuration
 
-Customize mru.nvim by adding the following to your Neovim config (e.g., init.lua):
+Customize mru.nvim by adding the following to your Neovim config:
 
 ```lua
 require('mru').setup({
