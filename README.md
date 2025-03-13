@@ -47,6 +47,7 @@ require('mru').setup({
     mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
     events = {'BufEnter', 'BufWritePost'},        -- events to update mru file list
     ignore_path_regexs = { '/.git/' },
+    enable_logger = true,  -- require wsdjeg/logger.nvim
 })
 ```
 

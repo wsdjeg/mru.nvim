@@ -4,6 +4,7 @@ local enable_cache = true
 local ignore_path_regexs = {}
 local mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
 local files = {}
+local log
 
 local unify_path = require('mru.utils').unify_path
 
@@ -26,7 +27,7 @@ local function read_cache()
     end, vim.tbl_keys(obj))
     files = {}
     for _, k in ipairs(keys) do
-        files[k] = obj[k]
+      files[k] = obj[k]
     end
   end
 end
@@ -54,6 +55,9 @@ function M.setup(opt)
   if opt.ignore_path_regexs then
     ignore_path_regexs = opt.ignore_path_regexs
   end
+  if opt.enable_logger then
+    log = require('mru.logger')
+  end
 
   read_cache()
 
@@ -64,6 +68,9 @@ function M.setup(opt)
     callback = function(e)
       local f = unify_path(e.file)
       if vim.fn.filereadable(f) == 1 and not is_ignore_path(f) then
+        if log then
+          log.info('update time of file:' .. f)
+        end
         files[f] = vim.uv.gettimeofday()
         write_cache()
       end
