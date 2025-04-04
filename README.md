@@ -2,6 +2,19 @@
 
 A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) files.
 
+<!-- vim-markdown-toc GFM -->
+
+* [Overview](#overview)
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Contributing](#contributing)
+* [Self-Promotion](#self-promotion)
+* [License](#license)
+
+<!-- vim-markdown-toc -->
+
 ## Overview
 
 `mru.nvim` keeps track of the files you’ve recently opened in Neovim and
@@ -60,6 +73,15 @@ Contributions are welcome! Feel free to:
 - Commit your changes (git commit -m "Add awesome idea").
 - Push to the branch (git push origin feature/awesome-idea).
 - Open a Pull Request.
+
+## Self-Promotion
+
+Like this plugin? Star the repository on
+GitHub.
+
+Love this plugin? Follow [me](https://wsdjeg.net/) on
+[GitHub](https://github.com/wsdjeg) and
+[Twitter](http://twitter.com/wsdtty).
 
 ## License
 
