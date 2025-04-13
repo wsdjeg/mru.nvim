@@ -56,11 +56,11 @@ Customize mru.nvim by adding the following to your Neovim config:
 
 ```lua
 require('mru').setup({
-    enable_cache = true,
-    mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
-    events = {'BufEnter', 'BufWritePost'},        -- events to update mru file list
-    ignore_path_regexs = { '/.git/' },
-    enable_logger = true,  -- require wsdjeg/logger.nvim
+  enable_cache = true,
+  mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json',
+  events = { 'BufEnter', 'BufWritePost' }, -- events to update mru file list
+  ignore_path_regexs = { '/.git/' },
+  enable_logger = true, -- require wsdjeg/logger.nvim
 })
 ```
 
