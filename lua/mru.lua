@@ -43,6 +43,14 @@ local function write_cache()
   end
 end
 
+---@class MruSetupOpt
+---@field enable_cache? boolean enable or disable cache.
+---@field mru_cache_file? string specific the cache file path.
+---@field ignore_path_regexs? string[] table of regex
+---@field enable_logger? boolean enable or disable logger.nvim
+
+
+---@param opt MruSetupOpt
 function M.setup(opt)
   opt = opt or {}
   local augroup = vim.api.nvim_create_augroup('mru.nvim', { clear = true })
