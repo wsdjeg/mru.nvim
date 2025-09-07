@@ -99,4 +99,14 @@ function M.clear()
   write_cache()
 end
 
+function M.remove(regex)
+    local re = vim.regex(regex)
+    for f, _ in pairs(files) do
+        if re:match_str(f) then
+            files[f] = nil
+        end
+    end
+    write_cache()
+end
+
 return M

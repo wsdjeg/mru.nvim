@@ -4,14 +4,14 @@ A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) 
 
 <!-- vim-markdown-toc GFM -->
 
-* [Overview](#overview)
-* [Features](#features)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Configuration](#configuration)
-* [Contributing](#contributing)
-* [Self-Promotion](#self-promotion)
-* [License](#license)
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [Self-Promotion](#self-promotion)
+- [License](#license)
 
 <!-- vim-markdown-toc -->
 
@@ -50,6 +50,12 @@ vim.api.nvim_set_keymap('n', '<leader>m', ':Telesscope mru<CR>', { noremap = tru
 
 Now, pressing `<leader>m` (e.g., `\m` by default) will open the MRU list.
 
+Remove files from mru.
+
+```lua
+require('mru').remove(regex)
+```
+
 ## Configuration
 
 Customize mru.nvim by adding the following to your Neovim config:
@@ -80,8 +86,7 @@ Like this plugin? Star the repository on
 GitHub.
 
 Love this plugin? Follow [me](https://wsdjeg.net/) on
-[GitHub](https://github.com/wsdjeg) and
-[Twitter](http://twitter.com/wsdtty).
+[GitHub](https://github.com/wsdjeg).
 
 ## License
 
