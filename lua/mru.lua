@@ -81,19 +81,65 @@ function M.setup(opt)
   read_cache()
 
   local create_autocmd = vim.api.nvim_create_autocmd
-  create_autocmd(opt.events or { 'BufEnter', 'BufWritePost' }, {
+  create_autocmd({ 'BufRead' }, {
     pattern = { '*' },
     group = augroup,
     callback = function(e)
       local f = unify_path(e.file)
       if vim.fn.filereadable(f) == 1 and not is_ignore_path(f) then
         if log then
-          log.info('update time of file:' .. f)
+          log.info('update lastread time of file:' .. f)
         end
         files[f] = {
           lastmod = vim.fn.getftime(f),
           lastenter = vim.uv.gettimeofday(),
+          lastread = vim.uv.gettimeofday(),
         }
+        write_cache()
+      end
+    end,
+  })
+  create_autocmd({ 'BufEnter' }, {
+    pattern = { '*' },
+    group = augroup,
+    callback = function(e)
+      local f = unify_path(e.file)
+      if vim.fn.filereadable(f) == 1 and not is_ignore_path(f) then
+        if log then
+          log.info('update lastenter time of file:' .. f)
+        end
+        if files[f] then
+          if not files[f].lastmod then
+            files[f].lastmod = vim.fn.getftime(f)
+          end
+          files[f].lastenter = vim.uv.gettimeofday()
+        else
+          files[f] = {
+            lastmod = vim.fn.getftime(f),
+            lastenter = vim.uv.gettimeofday(),
+          }
+        end
+        write_cache()
+      end
+    end,
+  })
+  create_autocmd({ 'BufWritePost' }, {
+    pattern = { '*' },
+    group = augroup,
+    callback = function(e)
+      local f = unify_path(e.file)
+      if vim.fn.filereadable(f) == 1 and not is_ignore_path(f) then
+        if log then
+          log.info('update lastmod time of file:' .. f)
+        end
+        if files[f] then
+          files[f].lastmod = vim.fn.getftime(f)
+        else
+          files[f] = {
+            lastmod = vim.fn.getftime(f),
+            lastenter = vim.uv.gettimeofday(),
+          }
+        end
         write_cache()
       end
     end,
@@ -104,11 +150,15 @@ function M.get()
   local fs = vim.tbl_keys(files)
   if sort_by == 'lastmod' then
     table.sort(fs, function(a, b)
-      return files[a].lastmod > files[b].lastmod
+      return files[a].lastmod or 0 > (files[b].lastmod or 0)
     end)
-  else
+  elseif sort_by == 'lastread' then
     table.sort(fs, function(a, b)
-      return files[a].lastenter > files[b].lastenter
+      return files[a].lastread or 0 > (files[b].lastread or 0)
+    end)
+  elseif sort_by == 'lastenter' then
+    table.sort(fs, function(a, b)
+      return files[a].lastenter or 0 > (files[b].lastenter or 0)
     end)
   end
   return fs
