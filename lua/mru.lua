@@ -150,15 +150,15 @@ function M.get()
   local fs = vim.tbl_keys(files)
   if sort_by == 'lastmod' then
     table.sort(fs, function(a, b)
-      return files[a].lastmod or 0 > (files[b].lastmod or 0)
+      return (files[a].lastmod or 0) > (files[b].lastmod or 0)
     end)
   elseif sort_by == 'lastread' then
     table.sort(fs, function(a, b)
-      return files[a].lastread or 0 > (files[b].lastread or 0)
+      return (files[a].lastread or 0) > (files[b].lastread or 0)
     end)
   elseif sort_by == 'lastenter' then
     table.sort(fs, function(a, b)
-      return files[a].lastenter or 0 > (files[b].lastenter or 0)
+      return (files[a].lastenter or 0) > (files[b].lastenter or 0)
     end)
   end
   return fs
