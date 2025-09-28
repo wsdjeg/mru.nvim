@@ -8,6 +8,7 @@ local mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
 local files = {}
 local log
 local sort_by = 'lastenter'
+local mru_backup_file = vim.fn.stdpath('data') .. '/nvim-mru-backup.json'
 
 local unify_path = require('mru.utils').unify_path
 
@@ -19,8 +20,8 @@ local function is_ignore_path(p)
   end
   return false
 end
-local function read_cache()
-  local file = io.open(mru_cache_file, 'r')
+local function read_cache(fname)
+  local file = io.open(fname or mru_cache_file, 'r')
   if file then
     local context = file:read('*a')
     io.close(file)
@@ -35,11 +36,11 @@ local function read_cache()
   end
 end
 
-local function write_cache()
+local function write_cache(fname)
   if not enable_cache then
     return
   end
-  local file = io.open(mru_cache_file, 'w')
+  local file = io.open(fname or mru_cache_file, 'w')
   if file then
     file:write(vim.json.encode(files))
     io.close(file)
@@ -62,6 +63,9 @@ function M.setup(opt)
   end
   if opt.mru_cache_file then
     mru_cache_file = opt.mru_cache_file
+  end
+  if opt.mru_backup_file then
+    mru_backup_file = opt.mru_backup_file
   end
   if opt.ignore_path_regexs then
     ignore_path_regexs = opt.ignore_path_regexs
@@ -111,7 +115,13 @@ function M.get()
 end
 
 function M.clear()
+  write_cache(mru_backup_file)
   files = {}
+  write_cache()
+end
+
+function M.recover()
+  read_cache(mru_backup_file)
   write_cache()
 end
 
