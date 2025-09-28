@@ -1,10 +1,13 @@
 local M = {}
 
+---@type boolean enable or disable cache
 local enable_cache = true
+---@type table ignore path regexs
 local ignore_path_regexs = {}
 local mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json'
 local files = {}
 local log
+local sort_by = 'lastenter'
 
 local unify_path = require('mru.utils').unify_path
 
@@ -48,7 +51,7 @@ end
 ---@field mru_cache_file? string specific the cache file path.
 ---@field ignore_path_regexs? string[] table of regex
 ---@field enable_logger? boolean enable or disable logger.nvim
-
+---@field sort_by? string sort by `lastmod` or `lastenter`
 
 ---@param opt MruSetupOpt
 function M.setup(opt)
@@ -67,6 +70,10 @@ function M.setup(opt)
     log = require('mru.logger')
   end
 
+  if opt.sort_by == 'lastmod' or opt.sort_by == 'lastenter' and sort_by ~= opt.sort_by then
+    sort_by = opt.sort_by
+  end
+
   read_cache()
 
   local create_autocmd = vim.api.nvim_create_autocmd
@@ -79,7 +86,10 @@ function M.setup(opt)
         if log then
           log.info('update time of file:' .. f)
         end
-        files[f] = vim.uv.gettimeofday()
+        files[f] = {
+          lastmod = vim.fn.getftime(f),
+          lastenter = vim.uv.gettimeofday(),
+        }
         write_cache()
       end
     end,
@@ -88,9 +98,15 @@ end
 
 function M.get()
   local fs = vim.tbl_keys(files)
-  table.sort(fs, function(a, b)
-    return files[a] > files[b]
-  end)
+  if sort_by == 'lastmod' then
+    table.sort(fs, function(a, b)
+      return files[a].lastmod > files[b].lastmod
+    end)
+  else
+    table.sort(fs, function(a, b)
+      return files[a].lastenter > files[b].lastenter
+    end)
+  end
   return fs
 end
 
@@ -100,13 +116,13 @@ function M.clear()
 end
 
 function M.remove(regex)
-    local re = vim.regex(regex)
-    for f, _ in pairs(files) do
-        if re:match_str(f) then
-            files[f] = nil
-        end
+  local re = vim.regex(regex)
+  for f, _ in pairs(files) do
+    if re:match_str(f) then
+      files[f] = nil
     end
-    write_cache()
+  end
+  write_cache()
 end
 
 return M
