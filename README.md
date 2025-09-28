@@ -67,6 +67,9 @@ require('mru').setup({
   events = { 'BufEnter', 'BufWritePost' }, -- events to update mru file list
   ignore_path_regexs = { '/.git/' },
   enable_logger = true, -- require wsdjeg/logger.nvim
+  -- sort file by last modified time or last enter time
+  -- `lastmod` or `lastenter`, default is `lastenter`
+  sort_by = 'lastenter',
 })
 ```
 
