@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/wsdjeg/mru.nvim/compare/v1.1.0...v1.2.0) (2025-10-18)
+
+
+### Features
+
+* add picker source ([0c03544](https://github.com/wsdjeg/mru.nvim/commit/0c035447df5597583298ab846fd0e08929532684))
+* support sort_by lastread ([8de4c6b](https://github.com/wsdjeg/mru.nvim/commit/8de4c6b22f84e2c52d95124cc7ac8ba18385f7c1))
+
+
+### Bug Fixes
+
+* fix sort function ([fe1ccee](https://github.com/wsdjeg/mru.nvim/commit/fe1cceeba7acee05738fea62882672bc40a16cd5))
+
 ## [1.1.0](https://github.com/wsdjeg/mru.nvim/compare/v1.0.0...v1.1.0) (2025-09-28)
 
 
