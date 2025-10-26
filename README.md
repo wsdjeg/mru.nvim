@@ -10,6 +10,7 @@ A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) 
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
+- [Credits](#credits)
 - [Self-Promotion](#self-promotion)
 - [License](#license)
 
@@ -30,7 +31,7 @@ provides quick access to them via telescope extension.
 
 Use your preferred Neovim plugin manager to install mru.nvim.
 
-with [nvim-plug](https://github.com/wsdjeg/nvim-plug)
+Using [nvim-plug](https://github.com/wsdjeg/nvim-plug)
 
 ```lua
 require('plug').add({
@@ -42,7 +43,15 @@ Then use `:PlugInstall mru.nvim` to install this plugin.
 
 ## Usage
 
+To use this plugin, users also need a fuzzy finder plugin. mru.nvim provides telescope extension and picker.nvim extension.
+
 Add custom keybindings to your init.lua for faster access. Example:
+
+```lua
+vim.api.nvim_set_keymap('n', '<leader>m', ':Picker mru<CR>', { noremap = true, silent = true })
+```
+
+or
 
 ```lua
 vim.api.nvim_set_keymap('n', '<leader>m', ':Telesscope mru<CR>', { noremap = true, silent = true })
@@ -81,6 +90,10 @@ Contributions are welcome! Feel free to:
 - Commit your changes (git commit -m "Add awesome idea").
 - Push to the branch (git push origin feature/awesome-idea).
 - Open a Pull Request.
+
+## Credits
+
+- [Shougo/neomru.vim](https://github.com/Shougo/neomru.vim)
 
 ## Self-Promotion
 
