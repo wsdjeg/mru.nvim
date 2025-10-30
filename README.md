@@ -43,7 +43,9 @@ Then use `:PlugInstall mru.nvim` to install this plugin.
 
 ## Usage
 
-To use this plugin, users also need a fuzzy finder plugin. mru.nvim provides telescope extension and picker.nvim extension.
+This plugin provides a `:Mru` command, which will list mru files in quickfix windows.
+
+Users also can use fuzzy finder plugin. mru.nvim provides telescope extension and picker.nvim extension.
 
 Add custom keybindings to your init.lua for faster access. Example:
 
