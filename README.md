@@ -78,7 +78,8 @@ require('mru').setup({
   ignore_path_regexs = { '/.git/' },
   enable_logger = true, -- require wsdjeg/logger.nvim
   -- sort file by last modified time or last enter time
-  -- `lastmod`, `lastread` or `lastenter`, default is `lastenter`
+  -- `lastmod`, `lastread`, `frecency`
+  -- or `lastenter`, default is `lastenter`
   sort_by = 'lastenter',
 })
 ```

@@ -10,6 +10,12 @@ local log
 local sort_by = 'lastenter'
 local mru_backup_file = vim.fn.stdpath('data') .. '/nvim-mru-backup.json'
 
+local max_usage_count = 5
+
+local mru_time_range = 2 * 7 * 24 * 60 * 60 -- 2 weeks
+
+local min_time_diff = 5 -- 5s
+
 local unify_path = require('mru.utils').unify_path
 
 local function is_ignore_path(p)
@@ -20,6 +26,7 @@ local function is_ignore_path(p)
   end
   return false
 end
+
 local function read_cache(fname)
   local file = io.open(fname or mru_cache_file, 'r')
   if file then
@@ -27,13 +34,44 @@ local function read_cache(fname)
     io.close(file)
     local obj = vim.json.decode(context)
     local keys = vim.tbl_filter(function(t)
-      return vim.fn.filereadable(t) == 1 and not is_ignore_path(t)
+      if is_ignore_path(t) then
+        return false
+      end
+      if vim.fn.filereadable(t) == 0 then
+        return false
+      end
+      if
+        os.time() - math.max(obj[t].lastenter or 0, obj[t].lastmod or 0, obj[t].lastread or 0)
+        > mru_time_range
+      then
+        return false
+      end
+      return true
     end, vim.tbl_keys(obj))
     files = {}
     for _, k in ipairs(keys) do
       files[k] = obj[k]
     end
   end
+end
+
+function M.calculate_frecentcy(f)
+  local file = files[f]
+  if not file then
+    return 0
+  end
+  local frequency_weight = 0.7
+  local recency_weight = 0.3
+
+  local current_time = os.time()
+
+  local time_diff = current_time - file.lastenter
+  local lambda = 0.01
+
+  local time_decay_factor = 1 / (1 + lambda * time_diff)
+
+  local frecentcy = ((file.frecency or 0) * frequency_weight) + (time_decay_factor * recency_weight)
+  return frecentcy
 end
 
 local function write_cache(fname)
@@ -53,6 +91,7 @@ end
 ---@field ignore_path_regexs? string[] table of regex
 ---@field enable_logger? boolean enable or disable logger.nvim
 ---@field sort_by? string sort by `lastmod` or `lastenter`
+---@field mru_backup_file? string path of backup file.
 
 ---@param opt MruSetupOpt
 function M.setup(opt)
@@ -74,7 +113,12 @@ function M.setup(opt)
     log = require('mru.logger')
   end
 
-  if opt.sort_by == 'lastmod' or opt.sort_by == 'lastenter' and sort_by ~= opt.sort_by then
+  if
+    opt.sort_by == 'lastmod'
+    or opt.sort_by == 'lastenter'
+    or opt.sort_by == 'lastread'
+    or opt.sort_by == 'frecency' and sort_by ~= opt.sort_by
+  then
     sort_by = opt.sort_by
   end
 
@@ -90,10 +134,20 @@ function M.setup(opt)
         if log then
           log.info('update lastread time of file:' .. f)
         end
+        local frecency = 1
+        if
+          files[f]
+          and files[f].frecency
+          and math.min(os.time() - files[f].lastenter, os.time() - files[f].lastread)
+            > min_time_diff
+        then
+          frecency = math.min(max_usage_count, frecency + files[f].frecency)
+        end
         files[f] = {
           lastmod = vim.fn.getftime(f),
-          lastenter = vim.uv.gettimeofday(),
-          lastread = vim.uv.gettimeofday(),
+          lastenter = os.time(),
+          lastread = os.time(),
+          frecency = frecency,
         }
         write_cache()
       end
@@ -112,12 +166,20 @@ function M.setup(opt)
           if not files[f].lastmod then
             files[f].lastmod = vim.fn.getftime(f)
           end
-          files[f].lastenter = vim.uv.gettimeofday()
+          files[f].lastenter = os.time()
         else
           files[f] = {
             lastmod = vim.fn.getftime(f),
-            lastenter = vim.uv.gettimeofday(),
+            lastenter = os.time(),
           }
+        end
+        if
+          files[f]
+          and files[f].frecency
+          and math.min(os.time() - files[f].lastenter, os.time() - files[f].lastread)
+            > min_time_diff
+        then
+          files[f].frecency = math.min(max_usage_count, 1 + files[f].frecency)
         end
         write_cache()
       end
@@ -137,7 +199,7 @@ function M.setup(opt)
         else
           files[f] = {
             lastmod = vim.fn.getftime(f),
-            lastenter = vim.uv.gettimeofday(),
+            lastenter = os.time(),
           }
         end
         write_cache()
@@ -159,6 +221,10 @@ function M.get()
   elseif sort_by == 'lastenter' then
     table.sort(fs, function(a, b)
       return (files[a].lastenter or 0) > (files[b].lastenter or 0)
+    end)
+  elseif sort_by == 'frecency' then
+    table.sort(fs, function(a, b)
+      return M.calculate_frecentcy(a) > M.calculate_frecentcy(b)
     end)
   end
   return fs
