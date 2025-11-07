@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/wsdjeg/mru.nvim/compare/v1.2.0...v1.3.0) (2025-11-07)
+
+
+### Features
+
+* add frecency support ([2d3b947](https://github.com/wsdjeg/mru.nvim/commit/2d3b947cf1f29dec68efca62dc0d44cbdc1e908c))
+* support nvim-web-devicons ([d37dd91](https://github.com/wsdjeg/mru.nvim/commit/d37dd91fe176b7b9dc0b50d2d4ff293ffd88c802))
+
+
+### Bug Fixes
+
+* change default icon ([0e2b708](https://github.com/wsdjeg/mru.nvim/commit/0e2b7086fff8d561da85dfdb08f8e8f52d0d7635))
+
 ## [1.2.0](https://github.com/wsdjeg/mru.nvim/compare/v1.1.0...v1.2.0) (2025-10-30)
 
 
