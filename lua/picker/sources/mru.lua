@@ -19,7 +19,7 @@ function M.get()
       local icon, hl = get_icon(t)
       return {
         value = t,
-        str = (icon or ' ') .. ' ' .. t,
+        str = (icon or '󰈔') .. ' ' .. t,
         highlight = {
           { 0, 2, hl },
         },
