@@ -26,6 +26,7 @@ provides quick access to them via telescope extension.
 - Unified file path format.
 - Ignore path via regex.
 - Lightweight and no dependencies.
+- Support nvim-web-devicons
 
 ## Installation
 
