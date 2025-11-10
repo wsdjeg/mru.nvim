@@ -2,6 +2,11 @@
 
 A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) files.
 
+[![GitHub License](https://img.shields.io/github/license/wsdjeg/mru.nvim)](LICENSE)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/issues)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/commits/master/)
+[![GitHub Release](https://img.shields.io/github/v/release/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/releases)
+
 <!-- vim-markdown-toc GFM -->
 
 - [Overview](#overview)
