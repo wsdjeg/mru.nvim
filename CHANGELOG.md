@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/wsdjeg/mru.nvim/compare/v1.3.0...v1.3.1) (2025-11-16)
+
+
+### Bug Fixes
+
+* get_icon based on filename ([694e71b](https://github.com/wsdjeg/mru.nvim/commit/694e71b3f161efd404805c2d312765259194b45a))
+
 ## [1.3.0](https://github.com/wsdjeg/mru.nvim/compare/v1.2.0...v1.3.0) (2025-11-07)
 
 
