@@ -16,7 +16,7 @@ end
 function M.get()
   return vim.tbl_map(function(t)
     if get_icon then
-      local icon, hl = get_icon(t)
+      local icon, hl = get_icon(vim.fn.fnamemodify(t, ':t'))
       return {
         value = t,
         str = (icon or '󰈔') .. ' ' .. t,
