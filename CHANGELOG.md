@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/wsdjeg/mru.nvim/compare/v1.3.0...v1.4.0) (2025-11-23)
+
+
+### Features
+
+* add luarocks support ([6f67cc1](https://github.com/wsdjeg/mru.nvim/commit/6f67cc14e4cd57bc2ed4e55b5e9d099cbac80253))
+
+
+### Bug Fixes
+
+* get_icon based on filename ([694e71b](https://github.com/wsdjeg/mru.nvim/commit/694e71b3f161efd404805c2d312765259194b45a))
+
 ## [1.3.0](https://github.com/wsdjeg/mru.nvim/compare/v1.2.0...v1.3.0) (2025-11-07)
 
 
