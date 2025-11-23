@@ -6,6 +6,7 @@ A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) 
 [![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/issues)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/commits/master/)
 [![GitHub Release](https://img.shields.io/github/v/release/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/releases)
+[![luarocks](https://img.shields.io/luarocks/v/wsdjeg/mru.nvim)](https://luarocks.org/modules/wsdjeg/mru.nvim)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -46,6 +47,12 @@ require('plug').add({
 ```
 
 Then use `:PlugInstall mru.nvim` to install this plugin.
+
+Using [luarocks](https://luarocks.org/)
+
+```
+luarocks install mru.nvim
+```
 
 ## Usage
 
