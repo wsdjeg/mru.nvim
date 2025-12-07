@@ -29,6 +29,20 @@ function M.get()
   end, require('mru').get())
 end
 
+function M.actions()
+  return {
+    ['<C-t>'] = function(entry)
+      vim.cmd.tabedit(entry.value)
+    end,
+    ['<C-s>'] = function(entry)
+      vim.cmd.split(entry.value)
+    end,
+    ['<C-v>'] = function(entry)
+      vim.cmd.vsplit(entry.value)
+    end,
+  }
+end
+
 ---@field item PickerItem
 function M.default_action(item)
   vim.cmd('edit ' .. item.value)

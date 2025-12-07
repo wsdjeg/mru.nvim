@@ -14,6 +14,8 @@ A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) 
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+    - [Picker mru](#picker-mru)
+    - [Telescope mru](#telescope-mru)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
 - [Credits](#credits)
@@ -62,14 +64,27 @@ Users also can use fuzzy finder plugin. mru.nvim provides telescope extension an
 
 Add custom keybindings to your init.lua for faster access. Example:
 
+### Picker mru
+
+mru.nvim also provides a mru source for picker.nvim. which can be opened via `:Picker mru`.
+
+key bindings for picker mru extension:
+
+| Key Binding | Description                            |
+| ----------- | -------------------------------------- |
+| `<Enter>`   | open file in the current window        |
+| `<C-s>`     | open file in a horizontal split window |
+| `<C-v>`     | open file in a vertical split window   |
+| `<C-t>`     | open file in a new tab                 |
+
 ```lua
 vim.api.nvim_set_keymap('n', '<leader>m', ':Picker mru<CR>', { noremap = true, silent = true })
 ```
 
-or
+### Telescope mru
 
 ```lua
-vim.api.nvim_set_keymap('n', '<leader>m', ':Telesscope mru<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>m', ':Telescope mru<CR>', { noremap = true, silent = true })
 ```
 
 Now, pressing `<leader>m` (e.g., `\m` by default) will open the MRU list.
