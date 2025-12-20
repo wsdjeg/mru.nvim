@@ -10,4 +10,9 @@ vim.api.nvim_create_user_command('Mru', function(opt)
   elseif #opt.fargs >= 2 and opt.fargs[1] == 'remove' then
     require('mru').remove(opt.fargs[2])
   end
-end, { nargs = '*' })
+end, {
+  nargs = '*',
+  complete = function()
+    return { 'remove' }
+  end,
+})
