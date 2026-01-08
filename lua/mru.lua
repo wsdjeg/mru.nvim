@@ -41,7 +41,12 @@ local function read_cache(fname)
         return false
       end
       if
-        os.time() - math.max(obj[t].lastenter or 0, obj[t].lastmod or 0, obj[t].lastread or 0)
+        os.time()
+          - math.max(
+            obj[t].lastenter or 0,
+            obj[t].lastmod or 0,
+            obj[t].lastread or 0
+          )
         > mru_time_range
       then
         return false
@@ -70,7 +75,8 @@ function M.calculate_frecentcy(f)
 
   local time_decay_factor = 1 / (1 + lambda * time_diff)
 
-  local frecentcy = ((file.frecency or 0) * frequency_weight) + (time_decay_factor * recency_weight)
+  local frecentcy = ((file.frecency or 0) * frequency_weight)
+    + (time_decay_factor * recency_weight)
   return frecentcy
 end
 
@@ -138,7 +144,10 @@ function M.setup(opt)
         if
           files[f]
           and files[f].frecency
-          and math.min(os.time() - files[f].lastenter, os.time() - files[f].lastread)
+          and math.min(
+              os.time() - files[f].lastenter,
+              os.time() - files[f].lastread
+            )
             > min_time_diff
         then
           frecency = math.min(max_usage_count, frecency + files[f].frecency)
@@ -176,7 +185,10 @@ function M.setup(opt)
         if
           files[f]
           and files[f].frecency
-          and math.min(os.time() - files[f].lastenter, os.time() - files[f].lastread)
+          and math.min(
+              os.time() - files[f].lastenter,
+              os.time() - files[f].lastread
+            )
             > min_time_diff
         then
           files[f].frecency = math.min(max_usage_count, 1 + files[f].frecency)
