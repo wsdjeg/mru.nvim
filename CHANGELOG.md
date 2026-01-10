@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/wsdjeg/mru.nvim/compare/v1.4.0...v1.5.0) (2025-12-20)
+
+
+### Features
+
+* add mru picker actions ([8c9b62b](https://github.com/wsdjeg/mru.nvim/commit/8c9b62bc4b13373340a2c7ba9fc5f0976c75a13e))
+* completion for `:Mru` command ([7b308f4](https://github.com/wsdjeg/mru.nvim/commit/7b308f4e5cae29d69be5f3fb5034f19e9d5cbdc3))
+
 ## [1.4.0](https://github.com/wsdjeg/mru.nvim/compare/v1.3.0...v1.4.0) (2025-11-23)
 
 
