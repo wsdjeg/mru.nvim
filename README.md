@@ -27,7 +27,7 @@ A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) 
 ## Overview
 
 `mru.nvim` keeps track of the files you’ve recently opened in Neovim and
-provides quick access to them via telescope extension.
+provides quick access to them via picker.nvim or telescope.nvim extension.
 
 ## Features
 
