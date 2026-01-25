@@ -35,20 +35,11 @@ provides quick access to them via picker.nvim or telescope.nvim extension.
 mru.nvim does not aim to replace `v:oldfiles` directly.  
 Instead, it maintains its own MRU tracking to address several practical limitations:
 
-- **Unified path format**  
-  `v:oldfiles` may contain inconsistent or duplicated paths on Windows.
-
-- **Regex-based path filtering**  
-  Exclude files or directories to avoid recording sensitive paths.
-
-- **Editable and persistent**  
-  Changes to `v:oldfiles` do not persist across restarts.
-
-- **Fuzzy search support**  
-  Integrates with picker.nvim for fuzzy searching recently edited files.
-
-- **Flexible sorting strategies**  
-  Sort by last enter time, read time, or frecency.
+- Unified path format: `v:oldfiles` may contain inconsistent or duplicated paths on Windows.
+- Regex-based path filtering: Exclude files or directories to avoid recording sensitive paths.
+- Editable and persistent: The MRU list can be modified, and changes remain effective after restarting Neovim.
+- Fuzzy search support: Integrates with picker.nvim for fuzzy searching recently edited files.
+- Flexible sorting strategies: Sort by last enter time, read time, or frecency.
 
 ## Features
 
