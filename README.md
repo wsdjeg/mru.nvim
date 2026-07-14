@@ -1,93 +1,153 @@
 # mru.nvim
 
-A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) files.
-
+[![Run Tests](https://github.com/wsdjeg/mru.nvim/actions/workflows/test.yml/badge.svg)](https://github.com/wsdjeg/mru.nvim/actions/workflows/test.yml)
 [![GitHub License](https://img.shields.io/github/license/wsdjeg/mru.nvim)](LICENSE)
 [![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/issues)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/commits/master/)
 [![GitHub Release](https://img.shields.io/github/v/release/wsdjeg/mru.nvim)](https://github.com/wsdjeg/mru.nvim/releases)
 [![luarocks](https://img.shields.io/luarocks/v/wsdjeg/mru.nvim)](https://luarocks.org/modules/wsdjeg/mru.nvim)
 
+A lightweight Neovim plugin to manage and display your Most Recently Used (MRU) files.
+
 <!-- vim-markdown-toc GFM -->
 
-- [Overview](#overview)
-- [Why not v:oldfiles?](#why-not-voldfiles)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
+- [📘 Intro](#-intro)
+- [❓ Why not v:oldfiles?](#-why-not-voldfiles)
+- [✨ Features](#-features)
+- [📦 Installation](#-installation)
+- [🔧 Configuration](#-configuration)
+- [⚙️ Basic Usage](#️-basic-usage)
+    - [Commands](#commands)
+    - [API](#api)
+    - [Quickfix](#quickfix)
     - [Picker mru](#picker-mru)
     - [Telescope mru](#telescope-mru)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [Self-Promotion](#self-promotion)
-- [License](#license)
+- [📣 Self-Promotion](#-self-promotion)
+- [📄 License](#-license)
 
 <!-- vim-markdown-toc -->
 
-## Overview
+## 📘 Intro
 
-`mru.nvim` keeps track of the files you’ve recently opened in Neovim and
-provides quick access to them via picker.nvim or telescope.nvim extension.
+`mru.nvim` keeps track of the files you've recently opened in Neovim and
+provides quick access to them via quickfix, picker.nvim, or telescope.nvim extension.
 
-## Why not v:oldfiles?
+## ❓ Why not v:oldfiles?
 
-mru.nvim does not aim to replace `v:oldfiles` directly.  
+mru.nvim does not aim to replace `v:oldfiles` directly.
 Instead, it maintains its own MRU tracking to address several practical limitations:
 
-- Unified path format: `v:oldfiles` may contain inconsistent or duplicated paths on Windows.
-- Regex-based path filtering: Exclude files or directories to avoid recording sensitive paths.
-- Editable and persistent: The MRU list can be modified, and changes remain effective after restarting Neovim.
-- Fuzzy search support: Integrates with picker.nvim for fuzzy searching recently edited files.
-- Flexible sorting strategies: Sort by last enter time, read time, or frecency.
+- **Unified path format**: `v:oldfiles` may contain inconsistent or duplicated paths on Windows.
+- **Regex-based path filtering**: Exclude files or directories to avoid recording sensitive paths.
+- **Editable and persistent**: The MRU list can be modified, and changes remain effective after restarting Neovim.
+- **Fuzzy search support**: Integrates with picker.nvim or telescope.nvim for fuzzy searching recently edited files.
+- **Flexible sorting strategies**: Sort by last enter time, read time, modified time, or frecency.
 
-## Features
+## ✨ Features
 
-- Unified file path format.
-- Ignore path via regex.
-- Lightweight and no dependencies.
-- Support nvim-web-devicons
+- **🛤️ Unified file path format** - Consistent paths across platforms.
+- **🔍 Regex-based path filtering** - Exclude sensitive or unwanted paths.
+- **📦 Lightweight and no dependencies** - Zero required dependencies.
+- **🎨 Devicons support** - Optional integration with nvim-web-devicons.
+- **⚡ Flexible sorting** - Sort by `lastenter`, `lastread`, `lastmod`, or `frecency`.
+- **💾 Persistent cache** - MRU list survives Neovim restarts.
+- **🔄 Backup and recover** - Clear and restore your MRU list anytime.
 
-## Installation
+## 📦 Installation
 
 Use your preferred Neovim plugin manager to install mru.nvim.
 
-Using [nvim-plug](https://github.com/wsdjeg/nvim-plug)
+Using [nvim-plug](https://github.com/wsdjeg/nvim-plug):
 
 ```lua
 require('plug').add({
-    { 'wsdjeg/mru.nvim' }
+  { 'wsdjeg/mru.nvim' }
 })
 ```
 
 Then use `:PlugInstall mru.nvim` to install this plugin.
 
-Using [luarocks](https://luarocks.org/)
+Using [LuaRocks](https://luarocks.org/):
 
-```
+```sh
 luarocks install mru.nvim
 ```
 
-## Usage
+## 🔧 Configuration
 
-This plugin provides a `:Mru` command, which will list mru files in quickfix windows.
+The following is the default option of mru.nvim.
 
-Users also can use fuzzy finder plugin. mru.nvim provides telescope extension and picker.nvim extension.
+```lua
+require('mru').setup({
+  -- enable or disable cache (default: true)
+  enable_cache = true,
+  -- cache file path (default: stdpath('data') .. '/nvim-mru.json')
+  mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json',
+  -- backup file path (default: stdpath('data') .. '/nvim-mru-backup.json')
+  mru_backup_file = vim.fn.stdpath('data') .. '/nvim-mru-backup.json',
+  -- table of regex to ignore paths (default: {})
+  ignore_path_regexs = { '/.git/' },
+  -- enable logger.nvim (default: false, requires wsdjeg/logger.nvim)
+  enable_logger = false,
+  -- sort strategy: `lastenter`, `lastread`, `lastmod`, or `frecency`
+  -- default: `lastenter`
+  sort_by = 'lastenter',
+})
+```
 
-Add custom keybindings to your init.lua for faster access. Example:
+## ⚙️ Basic Usage
+
+### Commands
+
+| Command            | Description                                    |
+| ------------------ | ---------------------------------------------- |
+| `:Mru`             | List MRU files in the quickfix window          |
+| `:Mru remove {re}` | Remove files matching regex from the MRU list  |
+
+### API
+
+| Function                           | Description                                  |
+| ---------------------------------- | -------------------------------------------- |
+| `require('mru').setup(opt)`        | Initialize the plugin with options           |
+| `require('mru').get()`             | Returns a sorted list of MRU file paths      |
+| `require('mru').clear()`           | Backup current list to backup file, then clear |
+| `require('mru').recover()`         | Restore MRU list from backup file            |
+| `require('mru').remove(regex)`     | Remove files matching regex from MRU list    |
+| `require('mru').calculate_frecentcy(f)` | Calculate frecency score for a file     |
+
+### Quickfix
+
+Run `:Mru` to list all MRU files in the quickfix window:
+
+```vim
+:Mru
+```
+
+Remove files matching a regex pattern:
+
+```vim
+:Mru remove \.tmp$
+```
+
+Or via Lua API:
+
+```lua
+require('mru').remove('\\.tmp$')
+```
 
 ### Picker mru
 
-mru.nvim also provides a mru source for picker.nvim. which can be opened via `:Picker mru`.
+mru.nvim provides a source for [picker.nvim](https://github.com/wsdjeg/picker.nvim),
+which can be opened via `:Picker mru`.
 
-key bindings for picker mru extension:
+Key bindings for picker mru extension:
 
 | Key Binding | Description                            |
 | ----------- | -------------------------------------- |
-| `<Enter>`   | open file in the current window        |
-| `<C-s>`     | open file in a horizontal split window |
-| `<C-v>`     | open file in a vertical split window   |
-| `<C-t>`     | open file in a new tab                 |
+| `<Enter>`   | Open file in the current window        |
+| `<C-s>`     | Open file in a horizontal split window |
+| `<C-v>`     | Open file in a vertical split window   |
+| `<C-t>`     | Open file in a new tab                 |
 
 ```lua
 vim.api.nvim_set_keymap('n', '<leader>m', ':Picker mru<CR>', { noremap = true, silent = true })
@@ -95,57 +155,23 @@ vim.api.nvim_set_keymap('n', '<leader>m', ':Picker mru<CR>', { noremap = true, s
 
 ### Telescope mru
 
+mru.nvim also provides a [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) extension:
+
 ```lua
 vim.api.nvim_set_keymap('n', '<leader>m', ':Telescope mru<CR>', { noremap = true, silent = true })
 ```
 
 Now, pressing `<leader>m` (e.g., `\m` by default) will open the MRU list.
 
-Remove files from mru.
-
-```lua
-require('mru').remove(regex)
-```
-
-## Configuration
-
-Customize mru.nvim by adding the following to your Neovim config:
-
-```lua
-require('mru').setup({
-  enable_cache = true,
-  mru_cache_file = vim.fn.stdpath('data') .. '/nvim-mru.json',
-  ignore_path_regexs = { '/.git/' },
-  enable_logger = true, -- require wsdjeg/logger.nvim
-  -- sort file by last modified time or last enter time
-  -- `lastmod`, `lastread`, `frecency`
-  -- or `lastenter`, default is `lastenter`
-  sort_by = 'lastenter',
-})
-```
-
-## Contributing
-
-Contributions are welcome! Feel free to:
-
-- Fork this repository.
-- Create a feature branch (git checkout -b feature/awesome-idea).
-- Commit your changes (git commit -m "Add awesome idea").
-- Push to the branch (git push origin feature/awesome-idea).
-- Open a Pull Request.
-
-## Credits
-
-- [Shougo/neomru.vim](https://github.com/Shougo/neomru.vim)
-
-## Self-Promotion
+## 📣 Self-Promotion
 
 Like this plugin? Star the repository on
-GitHub.
+[GitHub](https://github.com/wsdjeg/mru.nvim).
 
 Love this plugin? Follow [me](https://wsdjeg.net/) on
 [GitHub](https://github.com/wsdjeg).
 
-## License
+## 📄 License
 
 This project is licensed under the GPL-3.0 License.
+
