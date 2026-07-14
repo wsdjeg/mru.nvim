@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.5.0](https://github.com/wsdjeg/mru.nvim/compare/v1.4.0...v1.5.0) (2026-07-14)
+
+
+### Features
+
+* add mru picker actions ([8c9b62b](https://github.com/wsdjeg/mru.nvim/commit/8c9b62bc4b13373340a2c7ba9fc5f0976c75a13e))
+* completion for `:Mru` command ([7b308f4](https://github.com/wsdjeg/mru.nvim/commit/7b308f4e5cae29d69be5f3fb5034f19e9d5cbdc3))
+
+
+### Bug Fixes
+
+* **ci:** use manifest mode for release-please to respect changelog-sections ([e3bffd9](https://github.com/wsdjeg/mru.nvim/commit/e3bffd97d3c347fafc21ebe4032e55baa1abe8b9))
+* **ci:** use manifest mode for release-please to respect changelog-sections ([e60d6b7](https://github.com/wsdjeg/mru.nvim/commit/e60d6b75570281fa53eb1fd7310cd858441fffd1))
+* correct release-please manifest version to 1.4.0 ([4e6942d](https://github.com/wsdjeg/mru.nvim/commit/4e6942d99ec3acdcc5dbfdd3cd1923b555f72edf))
+* format code ([726d571](https://github.com/wsdjeg/mru.nvim/commit/726d571954619973c0381b42be39fa4d0d6e39ce))
+
+
+### Documentation
+
+* remove emoji from features list items ([59dcbde](https://github.com/wsdjeg/mru.nvim/commit/59dcbdebba46261fe8147ff6a52e61ed645942d2))
+* update README following nvim-plug style ([67dbeab](https://github.com/wsdjeg/mru.nvim/commit/67dbeab4850bc6c504a7182f60857c54f1b46f7f))
+
 ## [1.4.0](https://github.com/wsdjeg/mru.nvim/compare/v1.3.0...v1.4.0) (2025-11-23)
 
 
