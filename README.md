@@ -45,13 +45,13 @@ Instead, it maintains its own MRU tracking to address several practical limitati
 
 ## ✨ Features
 
-- **🛤️ Unified file path format** - Consistent paths across platforms.
-- **🔍 Regex-based path filtering** - Exclude sensitive or unwanted paths.
-- **📦 Lightweight and no dependencies** - Zero required dependencies.
-- **🎨 Devicons support** - Optional integration with nvim-web-devicons.
-- **⚡ Flexible sorting** - Sort by `lastenter`, `lastread`, `lastmod`, or `frecency`.
-- **💾 Persistent cache** - MRU list survives Neovim restarts.
-- **🔄 Backup and recover** - Clear and restore your MRU list anytime.
+- **Unified file path format** - Consistent paths across platforms.
+- **Regex-based path filtering** - Exclude sensitive or unwanted paths.
+- **Lightweight and no dependencies** - Zero required dependencies.
+- **Devicons support** - Optional integration with nvim-web-devicons.
+- **Flexible sorting** - Sort by `lastenter`, `lastread`, `lastmod`, or `frecency`.
+- **Persistent cache** - MRU list survives Neovim restarts.
+- **Backup and recover** - Clear and restore your MRU list anytime.
 
 ## 📦 Installation
 
